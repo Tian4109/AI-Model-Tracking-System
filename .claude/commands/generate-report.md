@@ -14,11 +14,12 @@ Use this command after one or more `track-*` commands have updated the relevant 
 ## Command Contract
 
 **Input files:**
-- `drafts/openai.md`
-- `drafts/anthropic.md`
-- `drafts/google.md`
-- `drafts/meta.md`
-- `drafts/microsoft.md`
+- all available Markdown files in `drafts/*.md`
+
+This includes both:
+
+- core vendor drafts, such as `drafts/openai.md`
+- additional vendor drafts, such as `drafts/mistral.md`
 
 **Agent to launch:**
 - `Reporter`
@@ -56,14 +57,15 @@ Launch the `Reporter` subagent.
 
 The Reporter must:
 
-1. Read all available vendor draft files in `drafts/`.
+1. Read all available Markdown draft files in `drafts/`.
 2. Treat drafts as structured intermediate data, not final prose.
-3. Validate and normalise draft data.
-4. Apply project scope filtering.
-5. Separate API / closed-weight models from open-weight models.
-6. Compare models across vendors.
-7. Generate scenario-based recommendations.
-8. Generate the final report at `models.md`.
+3. Include both core vendor drafts and additional vendor drafts.
+4. Validate and normalise draft data.
+5. Apply project scope filtering.
+6. Separate API / closed-weight models from open-weight models.
+7. Compare models across vendors.
+8. Generate scenario-based recommendations.
+9. Generate the final report at `models.md`.
 
 Do not:
 
@@ -76,8 +78,20 @@ Do not:
 
 ## Missing Draft Handling
 
-If a vendor draft is missing, stale, or empty:
+If a draft is missing, stale, or empty:
 
 - Do not invent missing vendor information.
 - Continue with available drafts.
 - Add a short note in the final report indicating which vendor data was unavailable or not refreshed.
+
+If no valid draft files exist in `drafts/`, stop and tell the user to run a tracking command first, such as:
+
+```text
+/track-openai
+```
+
+or:
+
+```text
+/track-vendor Mistral
+```
