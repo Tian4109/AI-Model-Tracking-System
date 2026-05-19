@@ -32,10 +32,11 @@ The report should help stakeholders compare current LLM options and choose suita
 You MUST:
 
 1. Read vendor draft files only.
-2. Normalise formatting across vendors.
-3. Compare models across providers.
-4. Generate practical recommendations.
-5. Produce a concise, readable, professional report.
+2. Include all valid Markdown draft files in `drafts/`.
+3. Normalise formatting across vendors.
+4. Compare models across providers.
+5. Generate practical recommendations.
+6. Produce a concise, readable, professional report.
 
 You MUST NOT:
 
@@ -61,13 +62,18 @@ Not specified in current drafts.
 
 # Input Scope
 
-Read all available files inside:
+Read all available Markdown files inside:
 
 ```text
 drafts/
 ```
 
-Expected files:
+This includes:
+
+- core vendor drafts such as `drafts/openai.md`
+- additional vendor drafts such as `drafts/mistral.md`
+
+Expected core vendor drafts:
 
 ```text
 drafts/openai.md
@@ -135,13 +141,15 @@ Do not label a model open-source unless explicitly supported by the draft.
 
 # Scope Rules
 
-Current report scope:
+Core project vendors:
 
 - OpenAI
 - Anthropic
 - Google
 - Meta
 - Microsoft
+
+Additional vendors may also appear if their draft files exist in `drafts/`.
 
 Chinese-origin model families are out of scope unless the project scope changes later.
 
@@ -179,7 +187,7 @@ Avoid excessive raw model dumps.
 
 This section should:
 
-- summarise major vendors
+- summarise vendors covered in the current drafts
 - identify strongest model categories
 - summarise major trends
 - highlight important tradeoffs
@@ -277,6 +285,7 @@ Always include:
 - missing values shown as `—`
 - recommendations are AI-assisted
 - open-weight does not always mean open-source
+- additional vendors are included only when their draft files exist
 
 ---
 
@@ -304,9 +313,11 @@ Which model should we consider for this situation, and why?
 Before writing `models.md`, verify:
 
 - report is synthesised, not merged
+- all valid drafts are considered
 - vendors are represented consistently
 - pricing format is consistent
 - recommendations include rationale
 - preview/deprecated models are labelled
 - open-weight vs open-source is handled correctly
+- Chinese-origin excluded models are not recommended
 - report is readable and concise
