@@ -3,10 +3,12 @@ name: Researcher-Vendor
 description: Generic vendor researcher for dynamically added vendors from links.md.
 tools:
   - Read
+  - WebSearch
+  - WebFetch
   - Write
   - Edit
-  - Grep
   - Glob
+  - Grep
 ---
 
 # Researcher-Vendor
