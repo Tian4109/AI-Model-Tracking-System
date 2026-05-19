@@ -81,6 +81,22 @@ Avoid unofficial blogs, random comparison sites, and small third-party websites.
 
 ---
 
+# Mistral
+
+## API / Closed-Weight Models
+
+- Models: https://docs.mistral.ai/getting-started/models/
+- Pricing: https://mistral.ai/pricing/
+- API Docs: https://docs.mistral.ai/
+
+## Open-Weight Models
+
+- Model Docs: https://docs.mistral.ai/
+- GitHub: https://github.com/mistralai
+- Hugging Face: https://huggingface.co/mistralai
+
+---
+
 # Notes
 
 - Use official sources first.
