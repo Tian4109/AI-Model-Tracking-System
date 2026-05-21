@@ -353,68 +353,39 @@ flowchart TD
     end
 ```
 
-## After
+## After (Current Architecture)
 
 ```mermaid
 flowchart TD
-    CMD(["/track-models"]) --> RES
+    CMD(["/update-report"]) --> P1
 
-    subgraph RES["Researcher — Haiku 4.5 ⚡"]
-        L["Read links.md"] --> RA
-        L --> META["Meta ✕ SKIP_FETCH"]
+    subgraph P1["Phase 1 — Research"]
+        BASE[("BaseResearcher.md\nshared rules · schema · quality checklist")]
 
-        subgraph RA["Round A — 7 WebFetch in parallel"]
+        subgraph CORE["5 Dedicated Researcher Subagents"]
             direction LR
-            FA["OpenAI"] & FB["Anthropic"] & FC["Google"] & FD["OAI OSS"] & FE["Gemma"] & FF["Phi"] & FG["Mistral"]
+            R1["Researcher-OpenAI"] & R2["Researcher-Anthropic"] & R3["Researcher-Google"] & R4["Researcher-Meta"] & R5["Researcher-Microsoft"]
         end
 
-        RA --> RB
-        META --> RB
+        RV["Researcher-Vendor\n(Mistral · any vendor in links.md)"]
 
-        subgraph RB["Round B — 8 WebSearch in parallel  ✅ pre-approved"]
-            direction LR
-            SA["OpenAI"] & SB["Anthropic"] & SC["Google"] & SD["Meta"] & SE["OAI OSS"] & SF["Gemma"] & SG["Phi"] & SH["Mistral"]
-        end
-
-        RB --> IW["Write header → append Vendor 1 → … → append Vendor 8 → append Notes"]
+        BASE -.->|inherited rules| CORE
+        BASE -.->|inherited rules| RV
     end
 
-    RES --> REP
+    CORE --> DA["drafts/openai.md\ndrafts/anthropic.md\ndrafts/google.md\ndrafts/meta.md\ndrafts/microsoft.md"]
+    RV --> DB["drafts/mistral.md\ndrafts/<vendor>.md"]
 
-    subgraph REP["Reporter — Sonnet"]
-        RD["Read draft.md"] --> WM["Write models.md\n50 models documented"]
+    subgraph P2["Phase 2 — Reporter (Sonnet)"]
+        DA & DB --> RD["Read all drafts/*.md"]
+        RD --> WM["Write models.md"]
     end
 ```
 
-## 1. Parallel fetch and search (Researcher)
+## What changed
 
-The Researcher now processes all vendors simultaneously instead of one by one:
+**Before**, a single Researcher agent processed all vendors sequentially in one run. Every vendor required a manual approval pause for both `WebFetch` and `WebSearch`, and all collected data was held in memory until a single large write to one shared `draft.md` at the end. Adding or updating one vendor meant re-running the entire pipeline.
 
-- **Round A** — all 7 `WebFetch` calls are issued in a single parallel batch
-- **Round B** — all 8 `WebSearch` calls are issued in a single parallel batch after Round A completes
+**After**, each vendor has its own dedicated Researcher subagent (`Researcher-OpenAI`, `Researcher-Anthropic`, `Researcher-Google`, `Researcher-Meta`, `Researcher-Microsoft`). Additional vendors defined in `links.md` are handled by the generic `Researcher-Vendor`. All Researcher subagents inherit the shared research workflow, required field schema, source policy, and quality checklist from `BaseResearcher.md` — there is no duplicated logic. Each Researcher writes only its own isolated `drafts/<vendor>.md`, so a single vendor can be refreshed independently with commands like `/track-openai` without touching any other vendor's data. The Reporter then reads all files in `drafts/` and synthesises the final `models.md`.
 
-Previously each vendor was fetched and searched sequentially, so total time scaled linearly with the number of vendors.
-
-## 2. Meta URL skip (`links.md`)
-
-Meta's documentation URL (`llama.com/docs/...`) is a client-side React page that returns no usable static content. It is now marked `[SKIP_FETCH]` in `links.md`, so the Researcher skips the fetch entirely and goes directly to web search for that vendor.
-
-## 3. MCP tool permissions (`.claude/settings.local.json`)
-
-The tools `zai-mcp-server` and `zread` (used internally by the Researcher) are now pre-approved in `settings.local.json`. This eliminates the manual approval prompts that blocked execution between tool calls.
-
-## 4. Incremental `draft.md` writing (Researcher)
-
-The Researcher now writes `draft.md` in stages:
-
-1. File header written first, before any vendor is processed
-2. Each vendor's section is appended immediately after that vendor's data is extracted
-3. Research Notes are appended last
-
-Previously all 8 vendors were formatted and written in a single operation at the end, requiring the model to generate ~5 000 tokens in one shot. Incremental writing reduces each write to ~500–800 tokens.
-
-## 5. Researcher model (`Researcher.md`)
-
-The Researcher subagent now runs on `claude-haiku-4-5-20251001` instead of the default Sonnet. The Researcher's task (structured data extraction and formatted writing) does not require deep reasoning, so Haiku is sufficient and generates tokens approximately 3–4× faster.
-
-The Reporter subagent remains on Sonnet, as it performs compliance validation, cross-vendor analysis, and structured report generation where quality matters more than speed.
+The command entry point also changed: `/track-models` is replaced by a flexible set of commands — `/track-<vendor>` for targeted updates, `/track-all` to refresh all drafts, and `/update-report` for a full end-to-end pipeline run.
