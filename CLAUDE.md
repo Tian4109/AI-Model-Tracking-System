@@ -85,14 +85,14 @@ All commands are Claude Code slash commands defined in `.claude/commands/`. Run 
 ```
 Phase 1 — Research                  Phase 2 — Report
 ┌─────────────────────┐             ┌─────────────────────┐
-│ links.md             │             │ drafts/*.md          │
-│   ↓                  │             │   ↓                  │
-│ Researcher-OpenAI    │──→ .md ──→  │ Reporter             │
-│ Researcher-Anthropic │──→ .md ──→  │   ↓                  │
-│ Researcher-Google    │──→ .md ──→  │ models.md            │
-│ Researcher-Meta      │──→ .md ──→  │                      │
-│ Researcher-Microsoft │──→ .md ──→  │                      │
-│ Researcher-Vendor    │──→ .md ──→  │                      │
+│ links.md            │             │ drafts/*.md         │
+│   ↓                 │             │   ↓                 │
+│ Researcher-OpenAI   │ ——> .md ——> │ Reporter            │
+│ Researcher-Anthropic│ ──> .md ——> │   ↓                 │
+│ Researcher-Google   │ ──> .md ——> │ models.md           │
+│ Researcher-Meta     │ ──> .md ——> │                     │
+│ Researcher-Microsoft│ ──> .md ——> │                     │
+│ Researcher-Vendor   │ ──> .md ——> │                     │
 └─────────────────────┘             └─────────────────────┘
 ```
 
