@@ -23,7 +23,7 @@ Avoid unofficial blogs, random comparison sites, and small third-party websites.
 ## Open-Weight Models
 
 - Open Models: https://openai.com/open-models/
-<!-- - OpenAI GitHub: https://github.com/openai -->
+- OpenAI GitHub: https://github.com/openai
 
 ---
 
