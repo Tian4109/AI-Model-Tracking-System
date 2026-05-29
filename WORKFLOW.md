@@ -63,7 +63,7 @@ Researcher rules:
 
 ---
 
-# Reporting Workflow
+# Report Workflow
 
 The Reporter:
 
