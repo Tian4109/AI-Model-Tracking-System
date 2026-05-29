@@ -389,3 +389,7 @@ flowchart TD
 **After**, each vendor has its own dedicated Researcher subagent (`Researcher-OpenAI`, `Researcher-Anthropic`, `Researcher-Google`, `Researcher-Meta`, `Researcher-Microsoft`). Additional vendors defined in `links.md` are handled by the generic `Researcher-Vendor`. All Researcher subagents inherit the shared research workflow, required field schema, source policy, and quality checklist from `BaseResearcher.md` — there is no duplicated logic. Each Researcher writes only its own isolated `drafts/<vendor>.md`, so a single vendor can be refreshed independently with commands like `/track-openai` without touching any other vendor's data. The Reporter then reads all files in `drafts/` and synthesises the final `models.md`.
 
 The command entry point also changed: `/track-models` is replaced by a flexible set of commands — `/track-<vendor>` for targeted updates, `/track-all` to refresh all drafts, and `/update-report` for a full end-to-end pipeline run.
+
+## The Team (T01 | S04)
+- **Ye Tian:** Build commands and subagents, design workflows and architectures.
+- **Bo Su:** Optimize prompts and architectures, test workflows within the system.
