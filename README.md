@@ -6,7 +6,7 @@ This project uses Claude Code to:
 
 1. collect AI model information from official vendor sources
 2. generate structured vendor draft files
-3. produce a final comparison report
+3. produce a final comparison and recommendation report
 
 Final output:
 
