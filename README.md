@@ -391,5 +391,5 @@ flowchart TD
 The command entry point also changed: `/track-models` is replaced by a flexible set of commands — `/track-<vendor>` for targeted updates, `/track-all` to refresh all drafts, and `/update-report` for a full end-to-end pipeline run.
 
 ## The Team (T01 | S04)
-- **Ye Tian:** Create commands and subagents, build workflows and architectures of subsystem.
+- **Ye Tian:** Create commands and subagents, design and build workflows of subsystem.
 - **Bo Su:** Optimize prompts and architectures, test workflows of the system.
